@@ -1,0 +1,27 @@
+package student
+import com.slb.droolsdemo.entity.Student
+rule "student1<10岁"
+    no-loop true
+    when
+       $s : Student(age > 10)
+    then
+//        Student student = new Student();
+//        student.setAge(15);
+//        $s.setAge(15);
+//        insert(student);
+        $s.setAge(10);
+        //update($s);
+        System.out.println("10岁规则出发");
+end
+
+rule "student1>10岁"
+    when
+      $s : Student(age < 20);
+    then
+        System.out.println($s.getAge());
+        System.out.println("25岁规则出发");
+end
+
+query "query_1"(Student student)
+      $s :  Student(age == student.age)
+end

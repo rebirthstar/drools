@@ -1,0 +1,10 @@
+package book.discount
+import com.slb.droolsdemo.entity.Order
+rule "book_discount_1"
+    when
+        $order:Order(originalPrice>0)
+    then
+        $order.setRealPrice($order.getOriginalPrice());
+        System.out.println("无优惠");
+
+end
