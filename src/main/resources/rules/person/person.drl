@@ -1,0 +1,29 @@
+package rules.person
+import com.slb.droolsdemo.entity.Person
+import com.slb.droolsdemo.entity.IsAdult
+import com.slb.droolsdemo.entity.IsChild
+
+
+rule "Age < 18"
+when
+  $p : Person(age < 18)
+then
+  insertLogical(new IsChild($p));
+  System.out.println($p.getName()+" is a child");
+end
+
+rule "Age >= 18"
+when
+  $p : Person(age >= 18)
+then
+  insertLogical(new IsAdult($p));
+  System.out.println($p.getName()+" is a adult");
+end
+
+
+rule "no child fact now"
+when
+  not(IsChild());
+then
+  System.out.println("There is no person age < 18" );
+end

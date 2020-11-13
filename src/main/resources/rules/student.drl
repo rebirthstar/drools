@@ -1,7 +1,7 @@
-package student
+package rules
 import com.slb.droolsdemo.entity.Student
-rule "student1<10岁"
-    no-loop true
+rule "student1 < 10岁"
+    //no-loop true
     when
        $s : Student(age > 10)
     then
@@ -9,8 +9,8 @@ rule "student1<10岁"
 //        student.setAge(15);
 //        $s.setAge(15);
 //        insert(student);
-        $s.setAge(10);
-        //update($s);
+        $s.setAge(11);
+        update($s);
         System.out.println("10岁规则出发");
 end
 

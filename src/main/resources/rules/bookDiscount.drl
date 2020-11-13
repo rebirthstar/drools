@@ -1,4 +1,4 @@
-package book.discount
+package rules;
 import com.slb.droolsdemo.entity.Order
 rule "book_discount_1"
     when
