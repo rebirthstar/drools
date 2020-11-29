@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("rule")
 @RestController
-public class RuleController {
+public class RuleController2 {
 
     @Autowired
     private RuleLoader ruleLoader;

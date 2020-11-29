@@ -14,6 +14,7 @@ import org.kie.api.io.Resource;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieContainerSessionsPool;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.StatelessKieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,26 +127,28 @@ public class DroolsdemoApplicationTests {
         KieServices kieServices = KieServices.Factory.get();
         KieContainer kContainer = kieServices.getKieClasspathContainer();
         KieContainerSessionsPool kieContainerSessionsPool = kContainer.newKieSessionsPool(10);
-        KieSession kieSession = kieContainerSessionsPool.newKieSession();
+       // KieSession kieSession = kieContainerSessionsPool.newKieSession();
+        StatelessKieSession statelessKieSession = kieContainerSessionsPool.newStatelessKieSession();
         String[] names = new String[]{"kitchen", "bedroom", "office", "livingroom"};
         Map<String, Room> name2room = new HashMap<String,Room>();
         for( String name: names ){
             Room room = new Room( name );
             name2room.put( name, room );
-            kieSession.insert( room );
+          // kieSession.insert( room );
             Sprinkler sprinkler = new Sprinkler( room );
-            kieSession.insert( sprinkler );
+            statelessKieSession.execute(Arrays.asList(new Object[] { room, sprinkler }));
+
+            //kieSession.insert( sprinkler );
         }
 
         //kieSession.fireAllRules();
 //
-        Fire kitchenFire = new Fire( name2room.get( "kitchen" ) );
-        Fire officeFire = new Fire( name2room.get( "office" ) );
-
-        FactHandle kitchenFireHandle = kieSession.insert( kitchenFire );
-        FactHandle officeFireHandle = kieSession.insert( officeFire );
-        kieSession.fireAllRules();
-        kieSession.dispose();
+//        Fire kitchenFire = new Fire( name2room.get( "kitchen" ) );
+//        Fire officeFire = new Fire( name2room.get( "office" ) );
+//        FactHandle kitchenFireHandle = kieSession.insert( kitchenFire );
+//        FactHandle officeFireHandle = kieSession.insert( officeFire );
+//        kieSession.fireAllRules();
+//        kieSession.dispose();
 
     }
 
