@@ -46,7 +46,7 @@ public class TestRuleService {
     /**
      * 触发规则
      */
-    public List<String> useRule(BaseFactEntity baseFactEntity) {
+    public GlobalParm useRule(BaseFactEntity baseFactEntity) {
         KieContainer kieContainer = kieContainerMap.get("kcontainer_"+baseFactEntity.getProductCode() + baseFactEntity.getChannel());
         KieSession kieSession = kieContainer.getKieBase().newKieSession();
         GlobalParm globalParm = new GlobalParm();
@@ -56,7 +56,7 @@ public class TestRuleService {
         kieSession.insert(baseFactEntity);
         kieSession.fireAllRules();
         kieSession.dispose();
-        return globalParm.getMsgList();
+        return globalParm;
 
     }
 

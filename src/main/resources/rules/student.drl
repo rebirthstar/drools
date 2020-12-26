@@ -1,17 +1,16 @@
 package rules
 import com.slb.droolsdemo.entity.Student
+import com.slb.droolsdemo.entity.Order
 rule "student1 < 10岁"
     //no-loop true
     when
-       $s : Student(age > 10)
+       $s : Student(age > 10) or $o : Order(realPrice == 100)
     then
 //        Student student = new Student();
 //        student.setAge(15);
 //        $s.setAge(15);
 //        insert(student);
-        $s.setAge(11);
-        update($s);
-        System.out.println("10岁规则出发");
+        System.out.println("order岁规则出发");
 end
 
 rule "student1>10岁"
@@ -25,3 +24,4 @@ end
 query "query_1"(Student student)
       $s :  Student(age == student.age)
 end
+

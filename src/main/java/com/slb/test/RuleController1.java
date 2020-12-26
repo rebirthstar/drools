@@ -5,6 +5,7 @@ import com.slb.version.service.RuleService1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,13 @@ public class RuleController1 {
     TestRuleService ruleService;
 
     @RequestMapping("/useRule")
-    public List<String> useRule(@RequestBody  BaseFactEntity baseFactEntity) {
-        List<String> strings = ruleService.useRule(baseFactEntity);
-        return strings;
+    public Map<String, Object> useRule(@RequestBody BaseFactEntity baseFactEntity) {
+        GlobalParm globalParm = ruleService.useRule(baseFactEntity);
+        Map<String, Object> ruleMap = new HashMap<>();
+        ruleMap.put("code", "0000");
+        ruleMap.put("msg", "成功");
+        ruleMap.put("data", globalParm);
+        return ruleMap;
     }
 
     @PostMapping("/loadRule")

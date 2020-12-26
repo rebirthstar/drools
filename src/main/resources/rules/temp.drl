@@ -1,0 +1,26 @@
+package rules;
+import com.slb.droolsdemo.entity.Benefi;
+import com.slb.droolsdemo.entity.InsuredFact;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import com.slb.droolsdemo.entity.RuleInfoDTO;
+import org.apache.commons.lang3.StringUtils;
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+global com.slb.droolsdemo.entity.RuleInfoDTO ruleInfoDTO;
+global java.util.List ruleList;
+rule "rule_a"
+    activation-group "appnt_name_group"
+
+    when
+      InsuredFact(height matches "^[1-9]\\d{1,2}$", weight matches "^[1-9]\\d*(\\.\\d)?$", birthday != null && $bmi : new BigDecimal(weight).divide(new BigDecimal(height).divide(new BigDecimal(100)).pow(2), 2, RoundingMode.HALF_UP), $age : ChronoUnit.YEARS.between(birthday, LocalDate.now()), not ($age(>=4 && <=7) && $bmi.compareTo(new BigDecimal(14)) >= 0 && $bmi.compareTo(new BigDecimal(21)) <= 0 || $age(>=8 && <=14) && $bmi.compareTo(new BigDecimal(14)) >= 0 && $bmi.compareTo(new BigDecimal(26)) <= 0 || $age(>=15 && <=17) && $bmi.compareTo(new BigDecimal(14)) >= 0 && $bmi.compareTo(new BigDecimal(28)) <= 0 || $age(>=18 ) && sex == "1" && $bmi.compareTo(new BigDecimal(17)) >= 0 && $bmi.compareTo(new BigDecimal(29)) <= 0 || $age(>=18 ) && sex == "2" && $bmi.compareTo(new BigDecimal(16)) >= 0 && $bmi.compareTo(new BigDecimal(29)) <= 0))
+
+    then
+
+         ruleInfoDTO = new RuleInfoDTO();
+         ruleInfoDTO.setRuleCode("001");
+         ruleInfoDTO.setMsg("命中规则");
+         ruleList.add(ruleInfoDTO);
+         System.out.println("执行规则了。。。。。");
+
+end

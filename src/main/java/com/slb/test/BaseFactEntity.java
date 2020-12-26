@@ -1,9 +1,6 @@
 package com.slb.test;
 
-import com.slb.version.annotation.Fact;
 import lombok.Data;
-
-import java.io.PipedReader;
 
 /**
  * @author LT

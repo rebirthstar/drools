@@ -18,5 +18,5 @@ public class GlobalParm {
     private int count;
 
     //
-    private List<String> msgList;
+    private List<TbRule> msgList;
 }
